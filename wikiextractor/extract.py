@@ -732,7 +732,7 @@ def unescape(text):
                 else:
                     return chr(int(code))
             else:  # named entity
-                return chr([code])
+                return chr(name2codepoint[code])
         except:
             return text  # leave as is
 
