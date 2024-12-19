@@ -1763,7 +1763,7 @@ parserFunctions = {
 
     'int': lambda string, *rest: str(int(string)),
 
-    'padleft': lambda char, width, string: string.ljust(char, int(pad)), # CHECK_ME
+    'padleft': lambda char, width, string: string.ljust(int(width), char), # CHECK_ME
 
 }
 
