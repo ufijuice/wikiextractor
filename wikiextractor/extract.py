@@ -30,8 +30,8 @@ import time
 # ----------------------------------------------------------------------
 
 # match tail after wikilink
-tailRE = re.compile('\w+')
-syntaxhighlight = re.compile('&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;', re.DOTALL)
+tailRE = re.compile(r'\w+')
+syntaxhighlight = re.compile(r'&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlight&gt;', re.DOTALL)
 
 ## PARAMS ####################################################################
 
@@ -380,7 +380,7 @@ wgUrlProtocols = [
 # as well as U+3000 is IDEOGRAPHIC SPACE for bug 19052
 EXT_LINK_URL_CLASS = r'[^][<>"\x00-\x20\x7F\s]'
 ExtLinkBracketedRegex = re.compile(
-    '\[(((?i)' + '|'.join(wgUrlProtocols) + ')' + EXT_LINK_URL_CLASS + r'+)\s*([^\]\x00-\x08\x0a-\x1F]*?)\]',
+    r'\[(((?i)' + r'|'.join(wgUrlProtocols) + r')' + EXT_LINK_URL_CLASS + r'+)\s*([^\]\x00-\x08\x0a-\x1F]*?)\]',
     re.S | re.U)
 EXT_IMAGE_REGEX = re.compile(
     r"""^(http://|https://)([^][<>"\x00-\x20\x7F\s]+)
@@ -621,7 +621,7 @@ class MagicWords():
     )
 
 
-magicWordsRE = re.compile('|'.join(MagicWords.switches))
+magicWordsRE = re.compile(r'|'.join(MagicWords.switches))
 
 
 # =========================================================================
@@ -1010,7 +1010,7 @@ class Extractor():
     maxParameterRecursionLevels = 16
 
     # check for template beginning
-    reOpen = re.compile('(?<!{){{(?!{)', re.DOTALL)
+    reOpen = re.compile(r'(?<!{){{(?!{)', re.DOTALL)
 
     def expandTemplates(self, wikitext):
         """
@@ -1394,11 +1394,11 @@ def findMatchingBraces(text, ldelim=0):
     #   {{{link|{{ucfirst:{{{1}}}}}} interchange}}}
 
     if ldelim:  # 2-3
-        reOpen = re.compile('[{]{%d,}' % ldelim)  # at least ldelim
-        reNext = re.compile('[{]{2,}|}{2,}')  # at least 2 open or close bracces
+        reOpen = re.compile(r'[{]{%d,}' % ldelim)  # at least ldelim
+        reNext = re.compile(r'[{]{2,}|}{2,}')  # at least 2 open or close bracces
     else:
-        reOpen = re.compile('{{2,}|\[{2,}')
-        reNext = re.compile('{{2,}|}{2,}|\[{2,}|]{2,}')  # at least 2
+        reOpen = re.compile(r'{{2,}|\[{2,}')
+        reNext = re.compile(r'{{2,}|}{2,}|\[{2,}|]{2,}')  # at least 2
 
     cur = 0
     while True:
@@ -1474,7 +1474,7 @@ def findBalanced(text, openDelim, closeDelim):
     """
     openPat = '|'.join([re.escape(x) for x in openDelim])
     # patter for delimiters expected after each opening delimiter
-    afterPat = {o: re.compile(openPat + '|' + c, re.DOTALL) for o, c in zip(openDelim, closeDelim)}
+    afterPat = {o: re.compile(openPat + r'|' + c, re.DOTALL) for o, c in zip(openDelim, closeDelim)}
     stack = []
     start = 0
     cur = 0
