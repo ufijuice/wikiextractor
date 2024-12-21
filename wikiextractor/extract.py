@@ -168,8 +168,8 @@ def clean(extractor, text, expand_templates=False, html_safe=True):
     text = text.replace('\t', ' ')
     text = spaces.sub(' ', text)
     text = dots.sub('...', text)
-    text = re.sub(r' (,:\.\)\]»)', r'\1', text)
-    text = re.sub(r'(\[\(«) ', r'\1', text)
+    text = re.sub(' (,:\.\)\]»)', r'\1', text)
+    text = re.sub('(\[\(«) ', r'\1', text)
     text = re.sub(r'\n\W+?\n', '\n', text, flags=re.U)  # lines with only punctuations
     text = text.replace(',,', ',').replace(',.', '.')
     if html_safe:
@@ -386,8 +386,7 @@ ExtLinkBracketedRegex = re.compile(
 EXT_IMAGE_REGEX = re.compile(
     r"""^(http://|https://)([^][<>"\x00-\x20\x7F\s]+)
     /([A-Za-z0-9_.,~%\-+&;#*?!=()@\x80-\xFF]+)\.(gif|png|jpg|jpeg)$""",
-    re.X | re.I
-)
+    re.X | re.I)
 
 
 def replaceExternalLinks(text):
@@ -1765,7 +1764,7 @@ parserFunctions = {
 
     'int': lambda string, *rest: str(int(string)),
 
-    'padleft': lambda char, width, string: string.ljust(int(width), char), # CHECK_ME
+    'padleft': lambda char, width, string: string.ljust(char, int(pad)), # CHECK_ME
 
 }
 
